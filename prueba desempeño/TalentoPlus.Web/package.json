@@ -1,0 +1,19 @@
+{
+  "name": "talentoplus.web",
+  "version": "1.0.0",
+  "description": "![.NET 8](https://img.shields.io/badge/.NET-8.0-blue) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791) ![License](https://img.shields.io/badge/License-MIT-green)",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./wwwroot/css/tailwind.css -o ./wwwroot/css/tailwind.min.css",
+    "watch:css": "tailwindcss -i ./wwwroot/css/tailwind.css -o ./wwwroot/css/tailwind.min.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.17"
+  }
+}

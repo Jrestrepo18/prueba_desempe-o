@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Panel de Control";
+}
+
+<div class="space-y-12 p-6">
+    <!-- Welcome Section with improved styling -->
+    <div class="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 text-white rounded-lg shadow-2xl p-10 border-l-4 border-white">
+        <div class="flex items-center justify-between gap-6">
+            <div>
+                <h1 class="text-5xl font-bold mb-3">🎯 Bienvenido a TalentoPlus</h1>
+                <p class="text-blue-100 text-lg">Sistema Integral de Gestión de Recursos Humanos</p>
+            </div>
+            <div class="text-8xl opacity-30 hidden lg:block">👥</div>
+        </div>
+    </div>
+
+    <!-- Stats Grid - Dashboard Cards with Enhanced Design -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 my-8">
+        <!-- Total Employees Card -->
+        <div class="card hover:shadow-2xl transition-all duration-300 border-l-4 border-blue-500 group p-6">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">Total de Empleados</p>
+                    <p class="text-5xl font-bold text-blue-600 mt-4">@ViewBag.Dashboard["TotalEmployees"]</p>
+                    <p class="text-xs text-gray-500 mt-3">📊 Empleados registrados en el sistema</p>
+                </div>
+                <div class="bg-blue-100 rounded-full p-5 group-hover:bg-blue-500 transition-colors flex-shrink-0">
+                    <span class="text-4xl">👥</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employees on Vacation Card -->
+        <div class="card hover:shadow-2xl transition-all duration-300 border-l-4 border-yellow-500 group p-6">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">En Vacaciones</p>
+                    <p class="text-5xl font-bold text-yellow-600 mt-4">@ViewBag.Dashboard["EmployeesOnVacation"]</p>
+                    <p class="text-xs text-gray-500 mt-3">🏖️ Empleados fuera de la oficina</p>
+                </div>
+                <div class="bg-yellow-100 rounded-full p-5 group-hover:bg-yellow-500 transition-colors flex-shrink-0">
+                    <span class="text-4xl">🏖️</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Employees Card -->
+        <div class="card hover:shadow-2xl transition-all duration-300 border-l-4 border-emerald-500 group p-6">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">Empleados Activos</p>
+                    <p class="text-5xl font-bold text-emerald-600 mt-4">@ViewBag.Dashboard["ActiveEmployees"]</p>
+                    <p class="text-xs text-gray-500 mt-3">✅ Empleados trabajando actualmente</p>
+                </div>
+                <div class="bg-emerald-100 rounded-full p-5 group-hover:bg-emerald-500 transition-colors flex-shrink-0">
+                    <span class="text-4xl">✅</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inactive Employees Card -->
+        <div class="card hover:shadow-2xl transition-all duration-300 border-l-4 border-gray-400 group p-6">
+            <div class="flex items-center justify-between gap-4">
+                <div class="flex-1">
+                    <p class="text-gray-600 text-sm font-semibold uppercase tracking-wide">Empleados Inactivos</p>
+                    <p class="text-5xl font-bold text-gray-600 mt-4">@ViewBag.Dashboard["InactiveEmployees"]</p>
+                    <p class="text-xs text-gray-500 mt-3">⏸️ Empleados marcados como inactivos</p>
+                </div>
+                <div class="bg-gray-100 rounded-full p-5 group-hover:bg-gray-400 transition-colors flex-shrink-0">
+                    <span class="text-4xl">⏸️</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions and Recent Activity -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 my-8">
+        <!-- Quick Actions Section -->
+        <div class="lg:col-span-1 card shadow-lg hover:shadow-xl transition-shadow p-8">
+            <h2 class="card-title text-2xl mb-8 flex items-center font-bold">
+                <span class="mr-3 text-3xl">⚡</span> Acciones Rápidas
+            </h2>
+            <div class="space-y-4">
+                <a href="@Url.Action("Create", "Employees")" class="btn-primary block text-center hover:shadow-md transform hover:-translate-y-1 transition-all duration-200 py-3">
+                    ➕ Agregar Nuevo Empleado
+                </a>
+                <a href="@Url.Action("Index", "Employees")" class="btn-secondary block text-center hover:shadow-md transform hover:-translate-y-1 transition-all duration-200 py-3">
+                    👥 Ver Todos los Empleados
+                </a>
+                <a href="@Url.Action("Index", "Departments")" class="btn-secondary block text-center hover:shadow-md transform hover:-translate-y-1 transition-all duration-200 py-3">
+                    🏢 Gestionar Departamentos
+                </a>
+            </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="lg:col-span-2 card shadow-lg hover:shadow-xl transition-shadow p-8">
+            <h2 class="card-title text-2xl mb-8 flex items-center font-bold">
+                <span class="mr-3 text-3xl">📋</span> Actividad Reciente
+            </h2>
+            <div class="space-y-5">
+                <div class="flex items-center justify-between border-l-4 border-blue-500 pl-5 py-4 hover:bg-blue-50 rounded transition-colors">
+                    <div class="flex-1">
+                        <p class="font-semibold text-gray-900">✅ John Doe agregado a Ingeniería</p>
+                        <p class="text-sm text-gray-500 mt-1">Hace 2 horas</p>
+                    </div>
+                    <span class="px-4 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold ml-4">Nuevo</span>
+                </div>
+                <div class="flex items-center justify-between border-l-4 border-yellow-500 pl-5 py-4 hover:bg-yellow-50 rounded transition-colors">
+                    <div class="flex-1">
+                        <p class="font-semibold text-gray-900">📈 Jane Smith promocionada</p>
+                        <p class="text-sm text-gray-500 mt-1">Hace 5 horas</p>
+                    </div>
+                    <span class="px-4 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold ml-4">Actualización</span>
+                </div>
+                <div class="flex items-center justify-between border-l-4 border-red-500 pl-5 py-4 hover:bg-red-50 rounded transition-colors">
+                    <div class="flex-1">
+                        <p class="font-semibold text-gray-900">🔄 Departamento de RRHH reestructurado</p>
+                        <p class="text-sm text-gray-500 mt-1">Hace 1 día</p>
+                    </div>
+                    <span class="px-4 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold ml-4">Cambio</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Info Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+        <!-- System Info Card -->
+        <div class="card shadow-lg bg-gradient-to-br from-indigo-50 to-blue-50 border-t-4 border-indigo-600 p-8">
+            <h3 class="text-2xl font-bold text-indigo-900 mb-6 flex items-center">
+                <span class="mr-3 text-3xl">ℹ️</span> Información del Sistema
+            </h3>
+            <div class="space-y-5">
+                <div class="flex justify-between items-center pb-4 border-b border-indigo-200">
+                    <span class="text-gray-700 font-medium">Versión:</span>
+                    <span class="text-indigo-600 font-semibold text-lg">1.0.0</span>
+                </div>
+                <div class="flex justify-between items-center pb-4 border-b border-indigo-200">
+                    <span class="text-gray-700 font-medium">Estado:</span>
+                    <span class="px-4 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">Operativo</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700 font-medium">Última actualización:</span>
+                    <span class="text-gray-600 text-sm font-medium">Hoy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Card -->
+        <div class="card shadow-lg bg-gradient-to-br from-green-50 to-emerald-50 border-t-4 border-green-600 p-8">
+            <h3 class="text-2xl font-bold text-green-900 mb-6 flex items-center">
+                <span class="mr-3 text-3xl">📊</span> Resumen Ejecutivo
+            </h3>
+            <div class="space-y-5">
+                <div class="flex justify-between items-center pb-4 border-b border-green-200">
+                    <span class="text-gray-700 font-medium">Tasa de Actividad:</span>
+                    <span class="text-2xl font-bold text-green-600">
+                        @{
+                            var total = (int)ViewBag.Dashboard["TotalEmployees"];
+                            var active = (int)ViewBag.Dashboard["ActiveEmployees"];
+                            var rate = total > 0 ? ((active * 100) / total) : 0;
+                        }
+                        @rate%
+                    </span>
+                </div>
+                <div class="flex justify-between items-center pb-4 border-b border-green-200">
+                    <span class="text-gray-700 font-medium">Promedio Departamentos:</span>
+                    <span class="text-2xl font-bold text-green-600">3</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700 font-medium">Roles Activos:</span>
+                    <span class="text-2xl font-bold text-green-600">8+</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

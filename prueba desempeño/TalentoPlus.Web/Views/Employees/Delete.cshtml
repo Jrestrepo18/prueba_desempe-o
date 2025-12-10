@@ -1,0 +1,65 @@
+@model TalentoPlus.Web.Models.Employee
+
+@{
+    ViewData["Title"] = $"Delete {Model.FirstName} {Model.LastName}";
+}
+
+<div class="max-w-2xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900">Delete Employee</h1>
+        <p class="text-red-600 font-semibold mt-1">⚠️ WARNING: This action cannot be undone!</p>
+    </div>
+
+    <!-- Warning Alert -->
+    <div class="card bg-yellow-50 border-l-4 border-yellow-500 mb-6">
+        <p class="text-yellow-900 font-semibold">Are you sure you want to delete this employee?</p>
+        <p class="text-yellow-800 mt-2">This will permanently remove <strong>@Model.FirstName @Model.LastName</strong> from the system.</p>
+    </div>
+
+    <!-- Employee Information Card -->
+    <div class="card mb-6">
+        <div class="bg-gray-50 border-b border-gray-200 px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-900">Employee Details</h2>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Full Name</p>
+                    <p class="text-gray-900 mt-1">@Model.FirstName @Model.LastName</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Document ID</p>
+                    <p class="text-gray-900 mt-1">@Model.Document</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Email</p>
+                    <p class="text-gray-900 mt-1">@Model.Email</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Position</p>
+                    <p class="text-gray-900 mt-1">@Model.Position</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Department</p>
+                    <p class="text-gray-900 mt-1">@Model.Department?.Name</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Status</p>
+                    <p class="text-gray-900 mt-1">@Model.Status</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <form asp-action="Delete" method="post" class="flex gap-3">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn-danger">
+            🗑️ Delete Employee
+        </button>
+        <a asp-action="Index" class="btn-secondary">
+            ← Cancel
+        </a>
+    </form>
+</div>

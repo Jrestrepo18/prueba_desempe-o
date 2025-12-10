@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Base de datos PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: talentoplus_db
+    environment:
+      POSTGRES_DB: prueba_jero
+      POSTGRES_USER: envyguard_user
+      POSTGRES_PASSWORD: jE15QhCwINzUNUw1FdclOB8YqZOE89
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - talentoplus_network
+
+  # Aplicación .NET
+  app:
+    build: .
+    container_name: talentoplus_app
+    depends_on:
+      - postgres
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ConnectionStrings__PostgreSQL: Host=postgres;Port=5432;Database=prueba_jero;Username=envyguard_user;Password=jE15QhCwINzUNUw1FdclOB8YqZOE89
+      Jwt__Secret: TalentoPlus_Secret_Key_2025_VeryLongAndSecure123456789
+      Jwt__Issuer: TalentoPlus
+      Jwt__Audience: TalentoPlus
+      Jwt__ExpirationMinutes: 1440
+      Gemini__ApiKey: ${GEMINI_API_KEY:-}
+      Gemini__Model: gemini-pro
+      Email__Smtp: smtp.gmail.com
+      Email__Port: 587
+      Email__Username: ${SMTP_USERNAME:-}
+      Email__Password: ${SMTP_PASSWORD:-}
+      Email__FromEmail: ${SMTP_FROM_EMAIL:-}
+      Email__FromName: TalentoPlus S.A.S
+    ports:
+      - "5000:80"
+      - "5001:443"
+    networks:
+      - talentoplus_network
+
+volumes:
+  postgres_data:
+
+networks:
+  talentoplus_network:
+    driver: bridge

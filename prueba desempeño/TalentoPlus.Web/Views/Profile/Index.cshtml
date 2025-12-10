@@ -1,0 +1,222 @@
+@model TalentoPlus.Web.Models.Employee
+
+@{
+    ViewData["Title"] = "Mi Perfil";
+}
+
+<div class="max-w-6xl mx-auto space-y-6">
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-900">Mi Perfil</h1>
+            <p class="text-gray-600 mt-1">Información personal y profesional</p>
+        </div>
+        <div class="flex gap-3">
+            <a asp-action="Edit" class="btn-primary">
+                ✎ Editar Perfil
+            </a>
+            <a asp-action="DownloadCV" class="btn-secondary">
+                📄 Descargar CV
+            </a>
+        </div>
+    </div>
+
+    @if (Model == null)
+    {
+        <div class="card bg-red-50 border-l-4 border-red-500">
+            <p class="text-red-900">
+                <strong>Error:</strong> No se pudo cargar tu perfil. Por favor, intenta más tarde.
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Column - Personal Info Card -->
+            <div class="lg:col-span-1">
+                <div class="card">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8 text-white rounded-t-lg">
+                        <div class="text-center">
+                            <div class="w-24 h-24 bg-white rounded-full mx-auto mb-4 flex items-center justify-center">
+                                <span class="text-4xl">👤</span>
+                            </div>
+                            <h2 class="text-2xl font-bold">@Model.FirstName @Model.LastName</h2>
+                            <p class="text-blue-100 mt-1">@Model.Position</p>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="border-b pb-4">
+                            <p class="text-xs text-gray-600 uppercase font-semibold">Documento</p>
+                            <p class="text-lg font-medium text-gray-900">@Model.Document</p>
+                        </div>
+                        <div class="border-b pb-4">
+                            <p class="text-xs text-gray-600 uppercase font-semibold">Correo Electrónico</p>
+                            <p class="text-sm font-medium text-gray-900 break-all">@Model.Email</p>
+                        </div>
+                        <div class="border-b pb-4">
+                            <p class="text-xs text-gray-600 uppercase font-semibold">Teléfono</p>
+                            <p class="text-lg font-medium text-gray-900">@(string.IsNullOrEmpty(Model.Phone) ? "No registrado" : Model.Phone)</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold">Estado</p>
+                            @if (Model.Status == "Active" || Model.Status == "Activo")
+                            {
+                                <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">✓ Activo</span>
+                            }
+                            else if (Model.Status == "Vacaciones" || Model.Status == "Vacation")
+                            {
+                                <span class="inline-block px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">🏖️ En Vacaciones</span>
+                            }
+                            else
+                            {
+                                <span class="inline-block px-4 py-2 bg-gray-100 text-gray-800 rounded-full text-sm font-medium">⏸️ @Model.Status</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Professional & Contact Info -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Información Profesional -->
+                <div class="card">
+                    <div class="bg-gray-50 border-b border-gray-200 px-6 py-4">
+                        <h3 class="text-lg font-semibold text-gray-900">💼 Información Profesional</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Departamento</p>
+                            <p class="text-lg font-medium text-gray-900">
+                                @if (Model.Department != null)
+                                {
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                                        @Model.Department.Name
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-gray-400">Sin asignar</span>
+                                }
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Cargo</p>
+                            <p class="text-lg font-medium text-gray-900">@(string.IsNullOrEmpty(Model.Position) ? "No especificado" : Model.Position)</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Nivel Educativo</p>
+                            <p class="text-lg font-medium text-gray-900">@(string.IsNullOrEmpty(Model.EducationLevel) ? "No especificado" : Model.EducationLevel)</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Salario</p>
+                            <p class="text-lg font-medium text-gray-900">
+                                @if (Model.Salary.HasValue && Model.Salary > 0)
+                                {
+                                    <span>$@Model.Salary?.ToString("N0")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-gray-400">-</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información de Fechas -->
+                <div class="card">
+                    <div class="bg-gray-50 border-b border-gray-200 px-6 py-4">
+                        <h3 class="text-lg font-semibold text-gray-900">📅 Fechas Importantes</h3>
+                    </div>
+                    <div class="p-6 grid grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Fecha de Ingreso</p>
+                            <p class="text-lg font-medium text-gray-900">
+                                @if (Model.HireDate.HasValue)
+                                {
+                                    <span>@Model.HireDate?.ToString("dd/MM/yyyy")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-gray-400">No registrada</span>
+                                }
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Fecha de Nacimiento</p>
+                            <p class="text-lg font-medium text-gray-900">
+                                @if (Model.BirthDate.HasValue)
+                                {
+                                    <span>@Model.BirthDate?.ToString("dd/MM/yyyy")</span>
+                                }
+                                else
+                                {
+                                    <span class="text-gray-400">No registrada</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Información de Contacto -->
+                <div class="card">
+                    <div class="bg-gray-50 border-b border-gray-200 px-6 py-4">
+                        <h3 class="text-lg font-semibold text-gray-900">📍 Información de Contacto</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Dirección</p>
+                            <p class="text-gray-900">
+                                @if (string.IsNullOrEmpty(Model.Address))
+                                {
+                                    <span class="text-gray-400">No registrada</span>
+                                }
+                                else
+                                {
+                                    <span>@Model.Address</span>
+                                }
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-600 uppercase font-semibold mb-1">Perfil Profesional</p>
+                            <p class="text-gray-900 whitespace-pre-wrap">
+                                @if (string.IsNullOrEmpty(Model.ProfessionalProfile))
+                                {
+                                    <span class="text-gray-400">No registrado</span>
+                                }
+                                else
+                                {
+                                    <span>@Model.ProfessionalProfile</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="flex gap-3">
+                    <a asp-action="Edit" class="btn-primary flex-1">
+                        ✎ Editar Información Personal
+                    </a>
+                    <a asp-action="DownloadCV" class="btn-secondary flex-1">
+                        📄 Descargar mi CV en PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="card bg-blue-50 border-l-4 border-blue-500">
+            <div class="flex gap-4">
+                <div class="text-2xl">ℹ️</div>
+                <div>
+                    <h4 class="font-semibold text-gray-900">Información</h4>
+                    <p class="text-gray-700 text-sm mt-1">
+                        Desde tu perfil puedes editar tu información personal, descargar tu CV en PDF, y ver todos tus datos registrados en el sistema.
+                        Para cambios en tu salario, departamento o cargo, contacta con Recursos Humanos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

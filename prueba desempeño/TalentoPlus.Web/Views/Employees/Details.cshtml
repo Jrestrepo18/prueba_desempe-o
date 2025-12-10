@@ -1,0 +1,132 @@
+@model TalentoPlus.Web.Models.Employee
+
+@{
+    ViewData["Title"] = $"Perfil - {Model.FirstName} {Model.LastName}";
+}
+
+<div class="max-w-4xl mx-auto">
+    <!-- Header Section -->
+    <div class="flex justify-between items-start mb-8">
+        <div>
+            <h1 class="text-4xl font-bold text-gray-900">@Model.FirstName @Model.LastName</h1>
+            <p class="text-gray-600 mt-1">Perfil del Empleado</p>
+        </div>
+        <div class="flex gap-3">
+            <a asp-action="Index" class="btn-secondary">
+                ← Volver
+            </a>
+        </div>
+    </div>
+
+    <!-- Personal Information Section -->
+    <div class="card mb-6">
+        <div class="bg-blue-50 border-b border-gray-200 px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-900">Personal Information</h2>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">First Name</p>
+                    <p class="text-gray-900 mt-1">@Model.FirstName</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Last Name</p>
+                    <p class="text-gray-900 mt-1">@Model.LastName</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Document ID</p>
+                    <p class="text-gray-900 mt-1">@Model.Document</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Fecha de Nacimiento</p>
+                    <p class="text-gray-900 mt-1">@Model.BirthDate?.ToString("yyyy-MM-dd")</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Phone</p>
+                    <p class="text-gray-900 mt-1">@Model.Phone</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Email</p>
+                    <p class="text-blue-600 mt-1"><a href="mailto:@Model.Email">@Model.Email</a></p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Education Level</p>
+                    <p class="text-gray-900 mt-1">@Model.EducationLevel</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <p class="text-sm text-gray-600 font-medium">Address</p>
+                <p class="text-gray-900 mt-1">@Model.Address</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employment Information Section -->
+    <div class="card mb-6">
+        <div class="bg-green-50 border-b border-gray-200 px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-900">Employment Information</h2>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Position</p>
+                    <p class="text-gray-900 mt-1">@Model.Position</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Department</p>
+                    <p class="text-gray-900 mt-1">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">@Model.Department?.Name</span>
+                    </p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Hire Date</p>
+                    <p class="text-gray-900 mt-1">@Model.HireDate?.ToString("dd/MM/yyyy")</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600 font-medium">Status</p>
+                    <div class="mt-1">
+                        @if (Model.Status == "Active")
+                        {
+                            <span class="badge badge-success">Active</span>
+                        }
+                        else if (Model.Status == "Vacation")
+                        {
+                            <span class="badge badge-warning">On Vacation</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-gray-100 text-gray-800">@Model.Status</span>
+                        }
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-sm text-gray-600 font-medium">Annual Salary</p>
+                    <p class="text-gray-900 mt-1 font-semibold">$@Model.Salary?.ToString("N2")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professional Profile Section -->
+    <div class="card mb-6">
+        <div class="bg-cyan-50 border-b border-gray-200 px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-900">Professional Profile</h2>
+        </div>
+        <div class="p-6">
+            <p class="text-gray-700 leading-relaxed">@Model.ProfessionalProfile</p>
+        </div>
+    </div>
+
+    <!-- Actions Section -->
+    <div class="flex gap-3 flex-wrap">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-primary">
+            ✎ Editar Empleado
+        </a>
+        <a asp-action="DownloadPDF" asp-route-id="@Model.Id" class="btn-secondary">
+            📄 Descargar Curriculum Vitae
+        </a>
+        <a asp-action="Index" class="btn-secondary">
+            ← Volver al listado
+        </a>
+    </div>
+</div>

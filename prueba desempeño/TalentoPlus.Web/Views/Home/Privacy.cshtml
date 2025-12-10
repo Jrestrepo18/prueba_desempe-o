@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-4xl font-bold text-gray-900">Privacy Policy</h1>
+        <p class="text-gray-600 mt-2">Last updated: @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+    </div>
+
+    <div class="card space-y-6">
+        <section>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3">1. Introduction</h2>
+            <p class="text-gray-700 leading-relaxed">
+                TalentoPlus is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and otherwise process personal information in connection with our employee management system.
+            </p>
+        </section>
+
+        <section class="border-t border-gray-200 pt-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3">2. Information We Collect</h2>
+            <p class="text-gray-700 mb-3">We may collect the following types of information:</p>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>Personal identification information (name, email, phone number)</li>
+                <li>Employment information (position, department, salary)</li>
+                <li>Educational background and professional qualifications</li>
+                <li>Contact and address information</li>
+                <li>Usage data and access logs</li>
+            </ul>
+        </section>
+
+        <section class="border-t border-gray-200 pt-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3">3. How We Use Your Information</h2>
+            <p class="text-gray-700 mb-3">We use the collected information for:</p>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>Managing employee records and payroll</li>
+                <li>Communicating about employment matters</li>
+                <li>Maintaining system security and preventing fraud</li>
+                <li>Complying with legal and regulatory requirements</li>
+                <li>Improving our services and user experience</li>
+            </ul>
+        </section>
+
+        <section class="border-t border-gray-200 pt-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3">4. Data Security</h2>
+            <p class="text-gray-700 leading-relaxed">
+                We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet is 100% secure.
+            </p>
+        </section>
+
+        <section class="border-t border-gray-200 pt-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3">5. Your Rights</h2>
+            <p class="text-gray-700 mb-3">You have the right to:</p>
+            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                <li>Access your personal information</li>
+                <li>Correct inaccurate data</li>
+                <li>Request deletion of your information</li>
+                <li>Object to processing of your data</li>
+                <li>Request restriction of processing</li>
+            </ul>
+        </section>
+
+        <section class="border-t border-gray-200 pt-6">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-3">6. Contact Us</h2>
+            <p class="text-gray-700">
+                If you have any questions about this Privacy Policy or our privacy practices, please contact us at:
+            </p>
+            <div class="mt-3 p-4 bg-gray-50 rounded-lg">
+                <p class="text-gray-700"><strong>Email:</strong> privacy@talentoplus.com</p>
+                <p class="text-gray-700"><strong>Address:</strong> TalentoPlus Headquarters, Your City, Your Country</p>
+            </div>
+        </section>
+
+        <section class="border-t border-gray-200 pt-6">
+            <p class="text-sm text-gray-600">
+                By using TalentoPlus, you consent to our Privacy Policy. We reserve the right to update this policy at any time. Your continued use of the system after changes constitutes your acceptance of the updated policy.
+            </p>
+        </section>
+    </div>
+
+    <div class="mt-8">
+        <a href="@Url.Action("Index", "Home")" class="btn-secondary">
+            ← Back to Home
+        </a>
+    </div>
+</div>

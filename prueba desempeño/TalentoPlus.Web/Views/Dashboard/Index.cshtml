@@ -1,0 +1,252 @@
+@{
+    ViewData["Title"] = "Dashboard - TalentoPlus";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="container-fluid py-4 dashboard-container">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="mb-2">📊 Dashboard de TalentoPlus</h1>
+            <p class="text-muted" id="currentDate"></p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="/Account/Logout" class="btn btn-outline-danger">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </a>
+        </div>
+    </div>
+
+    <!-- Estadísticas Principales -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-primary text-uppercase mb-1">Total de Empleados</div>
+                    <div class="h3 mb-0">
+                        <strong>@ViewBag.TotalEmployees</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-success text-uppercase mb-1">Empleados Activos</div>
+                    <div class="h3 mb-0">
+                        <strong>@ViewBag.ActiveEmployees</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-danger text-uppercase mb-1">Empleados Inactivos</div>
+                    <div class="h3 mb-0">
+                        <strong>@ViewBag.InactiveEmployees</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-chart-doughnut"></i> Estado de Empleados
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="employeeStatusChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-chart-bar"></i> Empleados por Departamento
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="departmentChart" height="100"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de Acción -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-cog"></i> Acciones Rápidas
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <a href="/Employees" class="btn btn-primary me-2">
+                        <i class="fas fa-users"></i> Ver Empleados
+                    </a>
+                    <a href="/Profile" class="btn btn-info me-2">
+                        <i class="fas fa-user"></i> Mi Perfil
+                    </a>
+                    <a href="/Home" class="btn btn-secondary">
+                        <i class="fas fa-home"></i> Inicio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .dashboard-container {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+    }
+    
+    .border-left-primary {
+        border-left: 4px solid #007bff !important;
+    }
+    
+    .border-left-success {
+        border-left: 4px solid #28a745 !important;
+    }
+    
+    .border-left-danger {
+        border-left: 4px solid #dc3545 !important;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 0.5rem;
+    }
+    
+    .text-primary {
+        color: #007bff !important;
+    }
+    
+    .text-success {
+        color: #28a745 !important;
+    }
+    
+    .text-danger {
+        color: #dc3545 !important;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+<script>
+    // Actualizar fecha actual
+    function updateDate() {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date().toLocaleDateString('es-ES', options);
+        document.getElementById('currentDate').textContent = today;
+    }
+
+    // Inicializar gráficos
+    function initCharts() {
+        const activeEmployees = @ViewBag.ActiveEmployees ?? 0;
+        const inactiveEmployees = @ViewBag.InactiveEmployees ?? 0;
+
+        // Gráfico de Estado de Empleados
+        const statusCtx = document.getElementById('employeeStatusChart');
+        if (statusCtx) {
+            new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Activos', 'Inactivos'],
+                    datasets: [{
+                        data: [activeEmployees, inactiveEmployees],
+                        backgroundColor: ['#28a745', '#dc3545'],
+                        borderColor: ['white', 'white'],
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Gráfico de Empleados por Departamento
+        const departments = @Html.Raw(Json.Serialize(ViewBag.EmployeesByDepartment ?? new List<object>()));
+        
+        if (departments && departments.length > 0) {
+            const deptNames = departments.map((d, i) => 'Departamento ' + (i + 1));
+            const deptCounts = departments.map(d => d.count);
+            
+            const deptCtx = document.getElementById('departmentChart');
+            if (deptCtx) {
+                new Chart(deptCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: deptNames,
+                        datasets: [{
+                            label: 'Número de Empleados',
+                            data: deptCounts,
+                            backgroundColor: '#007bff',
+                            borderColor: '#0056b3',
+                            borderWidth: 1,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    // Inicializar cuando el documento esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        updateDate();
+        initCharts();
+
+        // Si la query string indica que queremos ir a la sección de empleados, navegar allí
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const goto = params.get('gotoSection');
+            if (goto === 'employees') {
+                // Pequeño retardo para que el dashboard renderice y el usuario vea el panel brevemente
+                setTimeout(() => {
+                    window.location.href = '/Employees';
+                }, 300);
+            }
+        } catch (e) {
+            console.warn('No se pudo procesar gotoSection:', e);
+        }
+    });
+</script>

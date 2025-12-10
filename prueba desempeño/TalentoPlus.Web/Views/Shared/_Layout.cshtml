@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TalentoPlus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="~/css/tailwind.css" asp-append-version="true" />
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="flex items-center">
+                        <span class="text-2xl font-bold text-blue-600">TalentoPlus</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="text-gray-700 hover:text-blue-600 transition-colors">Panel de Control</a>
+                    <a asp-area="" asp-controller="Dashboard" asp-action="Index" class="text-gray-700 hover:text-blue-600 transition-colors font-semibold">📊 Dashboard IA</a>
+                    <a asp-area="" asp-controller="Employees" asp-action="Index" class="text-gray-700 hover:text-blue-600 transition-colors">Empleados</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-gray-700 hover:text-blue-600 transition-colors">Privacidad</a>
+                    
+                    @if (User?.Identity?.IsAuthenticated == true)
+                    {
+                        <div class="flex items-center space-x-4 pl-8 border-l border-gray-200">
+                            <span class="text-gray-700 text-sm">
+                                👤 <span class="font-semibold">@User.Identity.Name</span>
+                            </span>
+                            <form method="post" asp-area="" asp-controller="Account" asp-action="Logout" class="inline">
+                                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors text-sm font-medium">
+                                    🚪 Cerrar Sesión
+                                </button>
+                            </form>
+                        </div>
+                    }
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button type="button" class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:bg-gray-100">
+                    <svg class="block h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+        <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-sm">
+                <p>&copy; 2024 TalentoPlus - Todos los Derechos Reservados</p>
+                <p class="mt-2">
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy" class="hover:text-white transition-colors">Política de Privacidad</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
